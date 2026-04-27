@@ -1,24 +1,14 @@
 import { Tabs, useRouter } from "expo-router";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useApp } from "../../context/AppContext";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 const FAB_SIZE = 58;
 const BAR_H = 60;
-
-function IconHome({ active }: { active: boolean }) {
-  return <Text className={`text-3xl text-center leading-8 ${active ? "text-ink-gold" : "text-ink-dim"}`}>⌂</Text>;
-}
-function IconUsers({ active }: { active: boolean }) {
-  return <Text className={`text-3xl text-center leading-8 ${active ? "text-ink-gold" : "text-ink-dim"}`}>✦</Text>;
-}
-function IconHeart({ active }: { active: boolean }) {
-  return <Text className={`text-3xl text-center leading-8 ${active ? "text-ink-gold" : "text-ink-dim"}`}>♡</Text>;
-}
-function IconScroll({ active }: { active: boolean }) {
-  return <Text className={`text-3xl text-center leading-8 ${active ? "text-ink-gold" : "text-ink-dim"}`}>≡</Text>;
-}
+const GOLD = "#D4AF37";
+const DIM  = "#52525b";
 
 function TabItem({ label, active, onPress, icon, badge }: {
   label: string; active: boolean; onPress: () => void;
@@ -60,12 +50,29 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
   ).length;
 
   const leftTabs = [
-    { name: "index",   label: "Início",   icon: (a: boolean) => <IconHome  active={a} /> },
-    { name: "artists", label: "Artistas", icon: (a: boolean) => <IconUsers active={a} /> },
+    {
+      name: "index",
+      label: "Início",
+      icon: (a: boolean) => <Ionicons name="home-outline" size={24} color={a ? GOLD : DIM} />,
+    },
+    {
+      name: "artists",
+      label: "Artistas",
+      icon: (a: boolean) => <Ionicons name="people-outline" size={24} color={a ? GOLD : DIM} />,
+    },
   ];
   const rightTabs = [
-    { name: "aftercare", label: "Cuidados",  icon: (a: boolean) => <IconHeart  active={a} /> },
-    { name: "history",   label: "Histórico", icon: (a: boolean) => <IconScroll active={a} />, badge: pendingBadge },
+    {
+      name: "achievements",
+      label: "Conquistas",
+      icon: (a: boolean) => <Ionicons name="trophy-outline" size={24} color={a ? GOLD : DIM} />,
+    },
+    {
+      name: "profile",
+      label: "Perfil",
+      icon: (a: boolean) => <Ionicons name="person-outline" size={24} color={a ? GOLD : DIM} />,
+      badge: pendingBadge,
+    },
   ];
 
   const bottomPad = Math.min(insets.bottom, 16);
@@ -141,8 +148,8 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" />
       <Tabs.Screen name="artists" />
-      <Tabs.Screen name="aftercare" />
-      <Tabs.Screen name="history" />
+      <Tabs.Screen name="achievements" />
+      <Tabs.Screen name="profile" />
     </Tabs>
   );
 }
