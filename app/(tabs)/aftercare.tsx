@@ -6,13 +6,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const GOLD = "#D4AF37";
-const GOLD_DIM = "#b8972e";
-
 function FloralDivider() {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginVertical: 4 }}>
-      <Text style={{ color: GOLD_DIM, fontSize: 11, letterSpacing: 4 }}>{"\u2726 \u2767 \u2726"}</Text>
+    <View className="flex-row items-center justify-center my-1">
+      <Text className="text-ink-gold-dim text-[11px] tracking-[4px]">{"\u2726 \u2767 \u2726"}</Text>
     </View>
   );
 }
@@ -50,7 +47,7 @@ const STAGES = [
     day: "Mês 2–3",
     title: "Cura Total",
     icon: "✨",
-    color: GOLD,
+    color: "#D4AF37",
     tip: "A tatuagem está curada! Aplique protetor solar FPS 50+ sempre que exposta ao sol.",
   },
 ];
@@ -67,7 +64,7 @@ const RULES = [
 ];
 
 const PRODUCTS = [
-  { name: "Bepantol Derma", type: "Cicatrizante", badge: "Recomendado", badgeColor: GOLD },
+  { name: "Bepantol Derma", type: "Cicatrizante", badge: "Recomendado", badgeColor: "#D4AF37" },
   { name: "Lubriderm S/ Perfume", type: "Hidratante", badge: "Popular", badgeColor: "#22c55e" },
   { name: "Neutrogena SPF 70", type: "Protetor Solar", badge: "Essencial", badgeColor: "#3b82f6" },
   { name: "Sabão Granado", type: "Limpeza", badge: "Neutro", badgeColor: "#8b5cf6" },
@@ -75,128 +72,124 @@ const PRODUCTS = [
 
 export default function AftercareScreen() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0a0a0a" }} edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-ink-bg" edges={["top"]}>
       {/* HEADER */}
-      <View style={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 4 }}>
-        <Text style={{ color: GOLD_DIM, fontSize: 10, textTransform: "uppercase", letterSpacing: 3 }}>Ink Studio</Text>
-        <Text style={{ color: "#fff", fontSize: 22, fontWeight: "900", textTransform: "uppercase", letterSpacing: 3 }}>Cuidados</Text>
+      <View className="px-5 pt-4 pb-1">
+        <Text className="text-ink-gold-dim text-[10px] uppercase tracking-[3px]">Ink Studio</Text>
+        <Text className="text-white text-[22px] font-black uppercase tracking-[3px]">Cuidados</Text>
         <FloralDivider />
-        <Text style={{ color: "#a1a1aa", fontSize: 12, marginTop: 4, lineHeight: 18 }}>
+        <Text className="text-ink-muted text-xs mt-1 leading-[18px]">
           Como cuidar da sua tatuagem para garantir a melhor cura.
         </Text>
       </View>
 
       <ScrollView
-        style={{ flex: 1 }}
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40, paddingTop: 16 }}
       >
         {/* TIMELINE */}
-        <Text style={{ color: "#fff", fontSize: 14, fontWeight: "900", textTransform: "uppercase", letterSpacing: 2, marginBottom: 12 }}>
+        <Text className="text-white text-sm font-black uppercase tracking-[2px] mb-3">
           Fases de Cicatrização
         </Text>
         {STAGES.map((stage, i) => (
-          <View key={stage.day} style={{ flexDirection: "row", marginBottom: 16 }}>
-            {/* Timeline line + dot */}
-            <View style={{ alignItems: "center", marginRight: 14, width: 28 }}>
-              <View style={{
-                width: 28, height: 28, borderRadius: 14,
-                backgroundColor: "#111", borderWidth: 2, borderColor: stage.color,
-                alignItems: "center", justifyContent: "center",
-              }}>
-                <Text style={{ fontSize: 12 }}>{stage.icon}</Text>
+          <View key={stage.day} className="flex-row mb-4">
+            {/* Timeline dot + line */}
+            <View className="items-center mr-3.5 w-7">
+              <View
+                className="w-7 h-7 rounded-full bg-ink-card items-center justify-center"
+                style={{ borderWidth: 2, borderColor: stage.color }}
+              >
+                <Text className="text-xs">{stage.icon}</Text>
               </View>
               {i < STAGES.length - 1 && (
-                <View style={{ width: 2, flex: 1, backgroundColor: "#1f1f1f", marginTop: 4 }} />
+                <View className="w-0.5 flex-1 bg-ink-border mt-1" />
               )}
             </View>
             {/* Content */}
-            <View style={{
-              flex: 1, backgroundColor: "#111111",
-              borderRadius: 14, borderWidth: 1, borderColor: "#1f1f1f",
-              borderLeftWidth: 3, borderLeftColor: stage.color,
-              padding: 14, marginBottom: 4,
-            }}>
-              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                <Text style={{ color: "#fff", fontSize: 13, fontWeight: "800" }}>{stage.title}</Text>
-                <View style={{ backgroundColor: stage.color + "22", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 }}>
-                  <Text style={{ color: stage.color, fontSize: 9, fontWeight: "700" }}>{stage.day}</Text>
+            <View
+              className="flex-1 bg-ink-card rounded-[14px] border border-ink-border p-3.5 mb-1"
+              style={{ borderLeftWidth: 3, borderLeftColor: stage.color }}
+            >
+              <View className="flex-row justify-between items-center mb-1.5">
+                <Text className="text-white text-[13px] font-extrabold">{stage.title}</Text>
+                <View
+                  className="rounded-lg px-2 py-[3px]"
+                  style={{ backgroundColor: stage.color + "22" }}
+                >
+                  <Text className="text-[9px] font-bold" style={{ color: stage.color }}>{stage.day}</Text>
                 </View>
               </View>
-              <Text style={{ color: "#a1a1aa", fontSize: 12, lineHeight: 18 }}>{stage.tip}</Text>
+              <Text className="text-ink-muted text-xs leading-[18px]">{stage.tip}</Text>
             </View>
           </View>
         ))}
 
         {/* DIVIDER */}
-        <View style={{ marginVertical: 24 }}>
+        <View className="my-6">
           <FloralDivider />
         </View>
 
         {/* DOS & DON'TS */}
-        <Text style={{ color: "#fff", fontSize: 14, fontWeight: "900", textTransform: "uppercase", letterSpacing: 2, marginBottom: 12 }}>
+        <Text className="text-white text-sm font-black uppercase tracking-[2px] mb-3">
           O Que Fazer e Evitar
         </Text>
-        <View style={{ backgroundColor: "#111111", borderRadius: 16, borderWidth: 1, borderColor: "#1f1f1f", padding: 16, marginBottom: 24 }}>
+        <View className="bg-ink-card rounded-2xl border border-ink-border p-4 mb-6">
           {RULES.map((rule, i) => (
-            <View key={i} style={{
-              flexDirection: "row", alignItems: "flex-start",
-              paddingVertical: 10,
-              borderBottomWidth: i < RULES.length - 1 ? 1 : 0,
-              borderBottomColor: "#1a1a1a",
-            }}>
-              <Text style={{ fontSize: 14, marginRight: 12, marginTop: 1 }}>{rule.icon}</Text>
-              <Text style={{ color: rule.icon === "✅" ? "#d4d4d8" : "#71717a", fontSize: 13, flex: 1, lineHeight: 18 }}>{rule.text}</Text>
+            <View
+              key={i}
+              className="flex-row items-start py-2.5"
+              style={{ borderBottomWidth: i < RULES.length - 1 ? 1 : 0, borderBottomColor: "#1a1a1a" }}
+            >
+              <Text className="text-sm mr-3 mt-[1px]">{rule.icon}</Text>
+              <Text
+                className="text-[13px] flex-1 leading-[18px]"
+                style={{ color: rule.icon === "✅" ? "#d4d4d8" : "#71717a" }}
+              >
+                {rule.text}
+              </Text>
             </View>
           ))}
         </View>
 
         {/* PRODUCTS */}
-        <Text style={{ color: "#fff", fontSize: 14, fontWeight: "900", textTransform: "uppercase", letterSpacing: 2, marginBottom: 12 }}>
+        <Text className="text-white text-sm font-black uppercase tracking-[2px] mb-3">
           Produtos Indicados
         </Text>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
+        <View className="flex-row flex-wrap gap-2.5 mb-7">
           {PRODUCTS.map((p) => (
-            <View key={p.name} style={{
-              width: "47%",
-              backgroundColor: "#111111", borderRadius: 14,
-              borderWidth: 1, borderColor: "#1f1f1f",
-              padding: 14,
-            }}>
-              <View style={{
-                alignSelf: "flex-start",
-                backgroundColor: p.badgeColor + "22",
-                borderRadius: 6, paddingHorizontal: 7, paddingVertical: 3, marginBottom: 8,
-              }}>
-                <Text style={{ color: p.badgeColor, fontSize: 9, fontWeight: "800" }}>{p.badge}</Text>
+            <View
+              key={p.name}
+              className="bg-ink-card rounded-[14px] border border-ink-border p-3.5"
+              style={{ width: "47%" }}
+            >
+              <View
+                className="self-start rounded-[6px] px-[7px] py-[3px] mb-2"
+                style={{ backgroundColor: p.badgeColor + "22" }}
+              >
+                <Text className="text-[9px] font-extrabold" style={{ color: p.badgeColor }}>{p.badge}</Text>
               </View>
-              <Text style={{ color: "#fff", fontSize: 13, fontWeight: "700", marginBottom: 4 }}>{p.name}</Text>
-              <Text style={{ color: "#a1a1aa", fontSize: 11 }}>{p.type}</Text>
+              <Text className="text-white text-[13px] font-bold mb-1">{p.name}</Text>
+              <Text className="text-ink-muted text-[11px]">{p.type}</Text>
             </View>
           ))}
         </View>
 
         {/* RETOQUE CTA */}
-        <View style={{
-          backgroundColor: "#111111", borderWidth: 1, borderColor: GOLD_DIM,
-          borderRadius: 18, padding: 20, alignItems: "center",
-        }}>
-          <Text style={{ fontSize: 28, marginBottom: 8 }}>🎨</Text>
-          <Text style={{ color: GOLD, fontSize: 13, fontWeight: "900", textTransform: "uppercase", letterSpacing: 2, marginBottom: 4 }}>
+        <View className="bg-ink-card border border-ink-gold-dim rounded-[18px] p-5 items-center">
+          <Text className="text-[28px] mb-2">🎨</Text>
+          <Text className="text-ink-gold text-[13px] font-black uppercase tracking-[2px] mb-1">
             Precisa de Retoque?
           </Text>
           <FloralDivider />
-          <Text style={{ color: "#a1a1aa", fontSize: 12, textAlign: "center", lineHeight: 18, marginTop: 4 }}>
+          <Text className="text-ink-muted text-xs text-center leading-[18px] mt-1">
             {"Após a cura completa (≥2 meses),\nagende seu retoque gratuito com o mesmo artista."}
           </Text>
           <TouchableOpacity
-            style={{
-              marginTop: 16, backgroundColor: GOLD,
-              borderRadius: 12, paddingHorizontal: 28, paddingVertical: 12,
-            }}
+            className="mt-4 bg-ink-gold rounded-xl px-7 py-3"
             activeOpacity={0.85}
           >
-            <Text style={{ color: "#000", fontWeight: "900", fontSize: 12, letterSpacing: 2, textTransform: "uppercase" }}>
+            <Text className="text-black font-black text-xs tracking-[2px] uppercase">
               Agendar Retoque
             </Text>
           </TouchableOpacity>

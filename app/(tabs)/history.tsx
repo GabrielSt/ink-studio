@@ -11,13 +11,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useApp } from "../../context/AppContext";
 import { ARTISTS, TATTOO_STYLES, TATTOO_SIZES, GENERIC_STYLE, Booking } from "../../data/mock";
 
-const GOLD = "#D4AF37";
-const GOLD_DIM = "#b8972e";
-
 function FloralDivider() {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginVertical: 4 }}>
-      <Text style={{ color: GOLD_DIM, fontSize: 11, letterSpacing: 4 }}>{"\u2726 \u2767 \u2726"}</Text>
+    <View className="flex-row items-center justify-center my-1">
+      <Text className="text-ink-gold-dim text-[11px] tracking-[4px]">{"\u2726 \u2767 \u2726"}</Text>
     </View>
   );
 }
@@ -25,7 +22,7 @@ function FloralDivider() {
 function statusLabel(s: Booking["status"]): { text: string; color: string; bg: string } {
   switch (s) {
     case "pending_quote":  return { text: "Aguardando Orçamento", color: "#f59e0b", bg: "#1a1200" };
-    case "quote_received": return { text: "Proposta Recebida",    color: GOLD,      bg: "#1a1500" };
+    case "quote_received": return { text: "Proposta Recebida",    color: "#D4AF37", bg: "#1a1500" };
     case "confirmed":      return { text: "Agendado",             color: "#22c55e", bg: "#001a0b" };
     case "completed":      return { text: "Concluído",            color: "#a1a1aa", bg: "#111111" };
   }
@@ -101,35 +98,38 @@ export default function HistoryScreen() {
       <TouchableOpacity
         onPress={() => openBooking(b)}
         activeOpacity={0.8}
-        style={{ backgroundColor: "#111111", borderWidth: 1, borderColor: "#2a2310", borderRadius: 16, padding: 16, marginTop: 10 }}
+        className="bg-ink-card border border-ink-border-warm rounded-2xl p-4 mt-2.5"
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-          <View style={{ backgroundColor: st.bg, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4, borderWidth: 1, borderColor: st.color + "55" }}>
-            <Text style={{ color: st.color, fontSize: 10, fontWeight: "700" }}>{st.text}</Text>
+        <View className="flex-row justify-between items-center mb-2.5">
+          <View
+            className="rounded-[20px] px-2.5 py-1"
+            style={{ backgroundColor: st.bg, borderWidth: 1, borderColor: st.color + "55" }}
+          >
+            <Text className="text-[10px] font-bold" style={{ color: st.color }}>{st.text}</Text>
           </View>
-          <Text style={{ color: "#52525b", fontSize: 10 }}>{b.createdAt}</Text>
+          <Text className="text-ink-dim text-[10px]">{b.createdAt}</Text>
         </View>
-        <View style={{ gap: 6 }}>
+        <View className="gap-1.5">
           {[
             { label: "Artista", value: getArtistName(b.artistId) },
             { label: "Estilo",  value: getStyleName(b.styleId)  },
             { label: "Data",    value: `${b.preferredDate} às ${b.preferredTime}` },
           ].map(({ label, value }) => (
-            <View key={label} style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={{ color: "#a1a1aa", fontSize: 12 }}>{label}</Text>
-              <Text style={{ color: "#fff", fontSize: 12, fontWeight: "600" }}>{value}</Text>
+            <View key={label} className="flex-row justify-between">
+              <Text className="text-ink-muted text-xs">{label}</Text>
+              <Text className="text-white text-xs font-semibold">{value}</Text>
             </View>
           ))}
           {b.quoteValue ? (
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={{ color: "#a1a1aa", fontSize: 12 }}>Valor</Text>
-              <Text style={{ color: GOLD, fontSize: 13, fontWeight: "900" }}>R$ {b.quoteValue}</Text>
+            <View className="flex-row justify-between">
+              <Text className="text-ink-muted text-xs">Valor</Text>
+              <Text className="text-ink-gold text-[13px] font-black">R$ {b.quoteValue}</Text>
             </View>
           ) : null}
         </View>
         {(b.status === "pending_quote" || b.status === "quote_received") && (
-          <View style={{ marginTop: 12, borderTopWidth: 1, borderTopColor: "#1f1f1f", paddingTop: 10, alignItems: "center" }}>
-            <Text style={{ color: GOLD_DIM, fontSize: 11, fontWeight: "700" }}>
+          <View className="mt-3 border-t border-ink-border pt-2.5 items-center">
+            <Text className="text-ink-gold-dim text-[11px] font-bold">
               {b.status === "pending_quote" ? "Toque para ver detalhes e simular orçamento" : "Toque para ver a proposta recebida →"}
             </Text>
           </View>
@@ -141,12 +141,12 @@ export default function HistoryScreen() {
   function Section({ title, items }: { title: string; items: Booking[] }) {
     if (items.length === 0) return null;
     return (
-      <View style={{ marginBottom: 24 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
-          <Text style={{ color: "#fff", fontSize: 14, fontWeight: "900", textTransform: "uppercase", letterSpacing: 2 }}>{title}</Text>
-          <View style={{ flex: 1, height: 1, backgroundColor: "#1f1f1f", marginLeft: 12 }} />
-          <View style={{ backgroundColor: GOLD_DIM, borderRadius: 10, width: 20, height: 20, alignItems: "center", justifyContent: "center", marginLeft: 8 }}>
-            <Text style={{ color: "#000", fontSize: 10, fontWeight: "900" }}>{items.length}</Text>
+      <View className="mb-6">
+        <View className="flex-row items-center mb-1">
+          <Text className="text-white text-sm font-black uppercase tracking-[2px]">{title}</Text>
+          <View className="flex-1 h-px bg-ink-border ml-3" />
+          <View className="bg-ink-gold-dim rounded-[10px] w-5 h-5 items-center justify-center ml-2">
+            <Text className="text-black text-[10px] font-black">{items.length}</Text>
           </View>
         </View>
         {items.map((b) => <BookingCard key={b.id} b={b} />)}
@@ -155,34 +155,34 @@ export default function HistoryScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0a0a0a" }} edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-ink-bg" edges={["top"]}>
       {/* HEADER */}
-      <View style={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 4 }}>
-        <Text style={{ color: GOLD_DIM, fontSize: 10, textTransform: "uppercase", letterSpacing: 3 }}>Ink Studio</Text>
-        <Text style={{ color: "#fff", fontSize: 22, fontWeight: "900", textTransform: "uppercase", letterSpacing: 3 }}>Meu Histórico</Text>
+      <View className="px-5 pt-4 pb-1">
+        <Text className="text-ink-gold-dim text-[10px] uppercase tracking-[3px]">Ink Studio</Text>
+        <Text className="text-white text-[22px] font-black uppercase tracking-[3px]">Meu Histórico</Text>
         <FloralDivider />
       </View>
 
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40, paddingTop: 8 }}>
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40, paddingTop: 8 }}>
         {bookings.length === 0 ? (
-          <View style={{ alignItems: "center", paddingTop: 60 }}>
-            <Text style={{ fontSize: 48, marginBottom: 16 }}>{"🎨"}</Text>
-            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "900", textTransform: "uppercase", letterSpacing: 2, textAlign: "center", marginBottom: 8 }}>{"NENHUM\nAGENDAMENTO"}</Text>
+          <View className="items-center pt-[60px]">
+            <Text className="text-[48px] mb-4">{"🎨"}</Text>
+            <Text className="text-white text-lg font-black uppercase tracking-[2px] text-center mb-2">{"NENHUM\nAGENDAMENTO"}</Text>
             <FloralDivider />
-            <Text style={{ color: "#a1a1aa", fontSize: 13, textAlign: "center", marginTop: 8, marginBottom: 32, lineHeight: 20 }}>{"Você ainda não tem pedidos.\nQue tal marcar sua próxima tattoo?\nUse o botão + abaixo!"}</Text>
+            <Text className="text-ink-muted text-[13px] text-center mt-2 mb-8 leading-5">{"Você ainda não tem pedidos.\nQue tal marcar sua próxima tattoo?\nUse o botão + abaixo!"}</Text>
           </View>
         ) : (
           <>
             {/* Stats */}
-            <View style={{ flexDirection: "row", gap: 8, marginBottom: 24 }}>
+            <View className="flex-row gap-2 mb-6">
               {[
-                { label: "Pendentes", value: pending.length + withQuote.length, color: "#f59e0b" },
-                { label: "Agendados", value: confirmed.length, color: "#22c55e" },
-                { label: "Concluídos", value: completed.length, color: "#a1a1aa" },
+                { label: "Pendentes",  value: pending.length + withQuote.length, color: "#f59e0b" },
+                { label: "Agendados",  value: confirmed.length,                  color: "#22c55e" },
+                { label: "Concluídos", value: completed.length,                  color: "#a1a1aa" },
               ].map((s) => (
-                <View key={s.label} style={{ flex: 1, backgroundColor: "#111111", borderRadius: 12, borderWidth: 1, borderColor: "#2a2310", padding: 12, alignItems: "center" }}>
-                  <Text style={{ color: s.color, fontSize: 22, fontWeight: "900" }}>{s.value}</Text>
-                  <Text style={{ color: "#a1a1aa", fontSize: 10, marginTop: 2 }}>{s.label}</Text>
+                <View key={s.label} className="flex-1 bg-ink-card rounded-xl border border-ink-border-warm p-3 items-center">
+                  <Text className="text-[22px] font-black" style={{ color: s.color }}>{s.value}</Text>
+                  <Text className="text-ink-muted text-[10px] mt-0.5">{s.label}</Text>
                 </View>
               ))}
             </View>
@@ -196,103 +196,107 @@ export default function HistoryScreen() {
 
       {/* MODAL DETALHE + SIMULAR ORÇAMENTO */}
       <Modal visible={quoteModal} transparent animationType="slide" statusBarTranslucent>
-        <View style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.75)" }}>
-          <View style={{ backgroundColor: "#111111", borderTopLeftRadius: 24, borderTopRightRadius: 24, borderTopWidth: 2, borderColor: GOLD_DIM, padding: 24, paddingBottom: 40, maxHeight: "90%" }}>
+        <View className="flex-1 justify-end bg-black/75">
+          <View className="bg-ink-card rounded-t-3xl border-t-2 border-ink-gold-dim p-6 pb-10 max-h-[90%]">
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{ width: 48, height: 4, backgroundColor: GOLD_DIM, borderRadius: 2, alignSelf: "center", marginBottom: 20 }} />
+              <View className="w-12 h-1 bg-ink-gold-dim rounded-full self-center mb-5" />
 
               {selected && (
                 <>
-                  <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+                  <View className="flex-row justify-between items-start mb-4">
                     <View>
-                      <Text style={{ color: GOLD_DIM, fontSize: 10, fontWeight: "700", textTransform: "uppercase", letterSpacing: 2 }}>Detalhes do Pedido</Text>
-                      <Text style={{ color: "#fff", fontSize: 18, fontWeight: "900", marginTop: 4 }}>{getArtistName(selected.artistId)}</Text>
+                      <Text className="text-ink-gold-dim text-[10px] font-bold uppercase tracking-[2px]">Detalhes do Pedido</Text>
+                      <Text className="text-white text-lg font-black mt-1">{getArtistName(selected.artistId)}</Text>
                     </View>
-                    <TouchableOpacity onPress={() => setQuoteModal(false)} style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: "#1f1f1f", alignItems: "center", justifyContent: "center" }}>
-                      <Text style={{ color: "#fff", fontSize: 16 }}>✕</Text>
+                    <TouchableOpacity
+                      onPress={() => setQuoteModal(false)}
+                      className="w-8 h-8 rounded-full bg-ink-surface items-center justify-center"
+                    >
+                      <Text className="text-white text-base">✕</Text>
                     </TouchableOpacity>
                   </View>
 
-                  <View style={{ backgroundColor: "#0d0d0d", borderRadius: 12, padding: 16, marginBottom: 16, gap: 10 }}>
+                  <View className="bg-[#0d0d0d] rounded-xl p-4 mb-4 gap-2.5">
                     {[
-                      { label: "Estilo",   value: getStyleName(selected.styleId) },
-                      { label: "Tamanho",  value: getSizeName(selected.sizeId) },
-                      { label: "Data",     value: `${selected.preferredDate} às ${selected.preferredTime}` },
-                      { label: "Cliente",  value: selected.clientName },
+                      { label: "Estilo",  value: getStyleName(selected.styleId) },
+                      { label: "Tamanho", value: getSizeName(selected.sizeId) },
+                      { label: "Data",    value: `${selected.preferredDate} às ${selected.preferredTime}` },
+                      { label: "Cliente", value: selected.clientName },
                     ].map(({ label, value }) => (
-                      <View key={label} style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={{ color: "#a1a1aa", fontSize: 12 }}>{label}</Text>
-                        <Text style={{ color: "#fff", fontSize: 12, fontWeight: "600" }}>{value}</Text>
+                      <View key={label} className="flex-row justify-between">
+                        <Text className="text-ink-muted text-xs">{label}</Text>
+                        <Text className="text-white text-xs font-semibold">{value}</Text>
                       </View>
                     ))}
                   </View>
 
                   {activeQuote ? (
-                    <View style={{ backgroundColor: "#1a1500", borderWidth: 1, borderColor: GOLD, borderRadius: 16, padding: 20, marginBottom: 16 }}>
-                      <Text style={{ color: GOLD_DIM, fontSize: 10, fontWeight: "700", textTransform: "uppercase", letterSpacing: 2, marginBottom: 8 }}>
+                    <View className="bg-[#1a1500] border border-ink-gold rounded-2xl p-5 mb-4">
+                      <Text className="text-ink-gold-dim text-[10px] font-bold uppercase tracking-[2px] mb-2">
                         {"\u2726 Proposta do Artista"}
                       </Text>
-                      <Text style={{ color: GOLD, fontSize: 36, fontWeight: "900", marginBottom: 4 }}>
+                      <Text className="text-ink-gold text-[36px] font-black mb-1">
                         R$ {activeQuote.value}
                       </Text>
-                      <Text style={{ color: "#a1a1aa", fontSize: 12, lineHeight: 18, marginBottom: 14 }}>{activeQuote.note}</Text>
+                      <Text className="text-ink-muted text-xs leading-[18px] mb-3.5">{activeQuote.note}</Text>
 
-                      <View style={{ backgroundColor: "#0d0d0d", borderRadius: 12, padding: 14, flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                      <View className="bg-[#0d0d0d] rounded-xl p-3.5 flex-row justify-between items-center mb-4">
                         <View>
-                          <Text style={{ color: "#a1a1aa", fontSize: 11 }}>Caução necessária (20%)</Text>
-                          <Text style={{ color: GOLD, fontSize: 22, fontWeight: "900" }}>
+                          <Text className="text-ink-muted text-[11px]">Caução necessária (20%)</Text>
+                          <Text className="text-ink-gold text-[22px] font-black">
                             R$ {selected?.depositValue ?? Math.ceil((activeQuote.value * 0.2) / 10) * 10}
                           </Text>
-                          <Text style={{ color: "#52525b", fontSize: 10, marginTop: 4 }}>Restante pago no dia da sessão.</Text>
+                          <Text className="text-ink-dim text-[10px] mt-1">Restante pago no dia da sessão.</Text>
                         </View>
-                        <Text style={{ fontSize: 28 }}>{"💳"}</Text>
+                        <Text className="text-[28px]">{"💳"}</Text>
                       </View>
 
                       {selected.status !== "confirmed" ? (
                         <TouchableOpacity
-                          style={{ backgroundColor: GOLD, borderRadius: 12, paddingVertical: 14, alignItems: "center", shadowColor: GOLD, shadowOpacity: 0.4, shadowRadius: 10, elevation: 6 }}
+                          className="bg-ink-gold rounded-xl py-3.5 items-center"
                           onPress={handlePayDeposit}
                           activeOpacity={0.85}
+                          style={{ shadowColor: "#D4AF37", shadowOpacity: 0.4, shadowRadius: 10, elevation: 6 }}
                         >
-                          <Text style={{ color: "#000", fontWeight: "900", fontSize: 13, letterSpacing: 2, textTransform: "uppercase" }}>
+                          <Text className="text-black font-black text-[13px] tracking-[2px] uppercase">
                             {"\u2726 Confirmar e Pagar Caução"}
                           </Text>
                         </TouchableOpacity>
                       ) : (
-                        <View style={{ backgroundColor: "#001a0b", borderRadius: 12, paddingVertical: 14, alignItems: "center", borderWidth: 1, borderColor: "#22c55e" }}>
-                          <Text style={{ color: "#22c55e", fontWeight: "900", fontSize: 13, letterSpacing: 2 }}>SESSÃO CONFIRMADA ✓</Text>
+                        <View className="bg-[#001a0b] rounded-xl py-3.5 items-center border border-ink-green">
+                          <Text className="text-ink-green font-black text-[13px] tracking-[2px]">SESSÃO CONFIRMADA ✓</Text>
                         </View>
                       )}
                     </View>
                   ) : (
                     selected.status === "pending_quote" && (
-                      <View style={{ marginBottom: 16 }}>
-                        <View style={{ backgroundColor: "#1a1200", borderWidth: 1, borderColor: "#f59e0b55", borderRadius: 12, padding: 14, marginBottom: 14, flexDirection: "row", alignItems: "flex-start" }}>
-                          <Text style={{ fontSize: 16, marginRight: 10 }}>{"⏳"}</Text>
-                          <Text style={{ color: "#a1a1aa", fontSize: 12, flex: 1, lineHeight: 18 }}>
+                      <View className="mb-4">
+                        <View className="bg-[#1a1200] border border-[#f59e0b55] rounded-xl p-3.5 mb-3.5 flex-row items-start">
+                          <Text className="text-base mr-2.5">{"⏳"}</Text>
+                          <Text className="text-ink-muted text-xs flex-1 leading-[18px]">
                             Seu pedido está em análise. O artista entrará em contato em até 24h com a proposta.
                           </Text>
                         </View>
                         <TouchableOpacity
-                          style={{ backgroundColor: "#1a1500", borderWidth: 2, borderColor: GOLD, borderRadius: 12, paddingVertical: 14, alignItems: "center" }}
+                          className="bg-[#1a1500] border-2 border-ink-gold rounded-xl py-3.5 items-center"
                           onPress={handleSimulate}
                           activeOpacity={0.85}
                         >
-                          <Text style={{ color: GOLD, fontWeight: "900", fontSize: 13, letterSpacing: 2, textTransform: "uppercase" }}>
+                          <Text className="text-ink-gold font-black text-[13px] tracking-[2px] uppercase">
                             {"\u2726 Simular Orçamento"}
                           </Text>
-                          <Text style={{ color: "#52525b", fontSize: 10, marginTop: 4 }}>(modo demo)</Text>
+                          <Text className="text-ink-dim text-[10px] mt-1">(modo demo)</Text>
                         </TouchableOpacity>
                       </View>
                     )
                   )}
 
                   <TouchableOpacity
-                    style={{ borderWidth: 1, borderColor: "#1f1f1f", borderRadius: 12, paddingVertical: 14, alignItems: "center", marginTop: 4 }}
+                    className="border border-ink-border rounded-xl py-3.5 items-center mt-1"
                     onPress={() => setQuoteModal(false)}
                     activeOpacity={0.8}
                   >
-                    <Text style={{ color: "#a1a1aa", fontSize: 13, fontWeight: "700" }}>Fechar</Text>
+                    <Text className="text-ink-muted text-[13px] font-bold">Fechar</Text>
                   </TouchableOpacity>
                 </>
               )}
@@ -303,23 +307,26 @@ export default function HistoryScreen() {
 
       {/* MODAL CAUÇÃO PAGA */}
       <Modal visible={depositModal} transparent animationType="fade" statusBarTranslucent>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 24, backgroundColor: "rgba(0,0,0,0.88)" }}>
-          <View style={{ backgroundColor: "#111111", borderWidth: 1, borderColor: GOLD_DIM, borderRadius: 24, padding: 32, width: "100%", alignItems: "center" }}>
-            <View style={{ width: 72, height: 72, borderRadius: 36, backgroundColor: GOLD, alignItems: "center", justifyContent: "center", marginBottom: 16, shadowColor: GOLD, shadowOpacity: 0.5, shadowRadius: 16, elevation: 8 }}>
-              <Text style={{ fontSize: 32 }}>{"🎉"}</Text>
+        <View className="flex-1 items-center justify-center px-6 bg-black/[0.88]">
+          <View className="bg-ink-card border border-ink-gold-dim rounded-3xl p-8 w-full items-center">
+            <View
+              className="w-[72px] h-[72px] rounded-full bg-ink-gold items-center justify-center mb-4"
+              style={{ shadowColor: "#D4AF37", shadowOpacity: 0.5, shadowRadius: 16, elevation: 8 }}
+            >
+              <Text className="text-[32px]">{"🎉"}</Text>
             </View>
-            <Text style={{ color: GOLD, fontSize: 11, fontWeight: "900", textTransform: "uppercase", letterSpacing: 3, marginBottom: 4 }}>Caução Confirmada!</Text>
+            <Text className="text-ink-gold text-[11px] font-black uppercase tracking-[3px] mb-1">Caução Confirmada!</Text>
             <FloralDivider />
-            <Text style={{ color: "#fff", fontSize: 20, fontWeight: "900", textAlign: "center", textTransform: "uppercase", lineHeight: 26, marginTop: 8, marginBottom: 12 }}>{"SESSÃO\nAGENDADA!"}</Text>
-            <Text style={{ color: "#a1a1aa", fontSize: 13, textAlign: "center", lineHeight: 20, marginBottom: 24 }}>
+            <Text className="text-white text-[20px] font-black text-center uppercase leading-[26px] mt-2 mb-3">{"SESSÃO\nAGENDADA!"}</Text>
+            <Text className="text-ink-muted text-[13px] text-center leading-5 mb-6">
               {"Sua caução foi processada com sucesso.\nNos vemos na sessão!"}
             </Text>
             <TouchableOpacity
-              style={{ backgroundColor: GOLD, width: "100%", borderRadius: 12, paddingVertical: 14, alignItems: "center" }}
+              className="bg-ink-gold w-full rounded-xl py-3.5 items-center"
               onPress={() => setDepositModal(false)}
               activeOpacity={0.85}
             >
-              <Text style={{ color: "#000", fontWeight: "900", fontSize: 13, letterSpacing: 3, textTransform: "uppercase" }}>Fechar</Text>
+              <Text className="text-black font-black text-[13px] tracking-[3px] uppercase">Fechar</Text>
             </TouchableOpacity>
           </View>
         </View>

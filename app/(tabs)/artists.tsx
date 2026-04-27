@@ -12,13 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ARTISTS, TATTOO_STYLES, Artist } from "../../data/mock";
 import { useApp } from "../../context/AppContext";
 
-const GOLD = "#D4AF37";
-const GOLD_DIM = "#b8972e";
-
 function FloralDivider() {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginVertical: 4 }}>
-      <Text style={{ color: GOLD_DIM, fontSize: 11, letterSpacing: 4 }}>{"\u2726 \u2767 \u2726"}</Text>
+    <View className="flex-row items-center justify-center my-1">
+      <Text className="text-ink-gold-dim text-[11px] tracking-[4px]">{"\u2726 \u2767 \u2726"}</Text>
     </View>
   );
 }
@@ -27,13 +24,9 @@ function StylePill({ styleId }: { styleId: string }) {
   const style = TATTOO_STYLES.find((s) => s.id === styleId);
   if (!style) return null;
   return (
-    <View style={{
-      flexDirection: "row", alignItems: "center",
-      backgroundColor: "#1a1500", borderWidth: 1, borderColor: "#2a2310",
-      borderRadius: 20, paddingHorizontal: 10, paddingVertical: 4, marginRight: 6, marginBottom: 6,
-    }}>
-      <Text style={{ fontSize: 11, marginRight: 4 }}>{style.emoji}</Text>
-      <Text style={{ color: GOLD_DIM, fontSize: 10, fontWeight: "700" }}>{style.label}</Text>
+    <View className="flex-row items-center bg-[#1a1500] border border-ink-border-warm rounded-[20px] px-2.5 py-1 mr-1.5 mb-1.5">
+      <Text className="text-[11px] mr-1">{style.emoji}</Text>
+      <Text className="text-ink-gold-dim text-[10px] font-bold">{style.label}</Text>
     </View>
   );
 }
@@ -43,7 +36,6 @@ function ArtistDetailModal({ artist, onClose, onBook }: {
   onClose: () => void;
   onBook: () => void;
 }) {
-  // Fake gallery seeds per artist
   const seeds = {
     a1: ["tattoo10", "tattoo11", "tattoo12"],
     a2: ["tattoo20", "tattoo21", "tattoo22"],
@@ -53,104 +45,101 @@ function ArtistDetailModal({ artist, onClose, onBook }: {
 
   return (
     <Modal visible animationType="slide" transparent statusBarTranslucent>
-      <View style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.8)" }}>
-        <View style={{
-          backgroundColor: "#0f0f0f", borderTopLeftRadius: 28, borderTopRightRadius: 28,
-          borderTopWidth: 2, borderColor: GOLD_DIM,
-          maxHeight: "92%", paddingBottom: 40,
-        }}>
+      <View className="flex-1 justify-end bg-black/80">
+        <View className="bg-[#0f0f0f] rounded-t-[28px] border-t-2 border-ink-gold-dim max-h-[92%] pb-10">
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* Handle */}
-            <View style={{ width: 48, height: 4, backgroundColor: GOLD_DIM, borderRadius: 2, alignSelf: "center", marginTop: 14, marginBottom: 20 }} />
+            <View className="w-12 h-1 bg-ink-gold-dim rounded-full self-center mt-3.5 mb-5" />
 
             {/* Hero */}
-            <View style={{ alignItems: "center", paddingHorizontal: 24, marginBottom: 20 }}>
-              <View style={{ position: "relative", marginBottom: 16 }}>
+            <View className="items-center px-6 mb-5">
+              <View className="relative mb-4">
                 <Image
                   source={{ uri: artist.avatar }}
-                  style={{ width: 100, height: 100, borderRadius: 50, borderWidth: 3, borderColor: GOLD }}
+                  className="w-[100px] h-[100px] rounded-full border-[3px] border-ink-gold"
                   resizeMode="cover"
                 />
-                <View style={{
-                  position: "absolute", bottom: 0, right: 0,
-                  backgroundColor: GOLD, borderRadius: 14, paddingHorizontal: 8, paddingVertical: 3,
-                  borderWidth: 2, borderColor: "#0f0f0f",
-                }}>
-                  <Text style={{ color: "#000", fontSize: 9, fontWeight: "900" }}>PRO</Text>
+                <View className="absolute bottom-0 right-0 bg-ink-gold rounded-[14px] px-2 py-[3px] border-2 border-[#0f0f0f]">
+                  <Text className="text-black text-[9px] font-black">PRO</Text>
                 </View>
               </View>
-              <Text style={{ color: "#fff", fontSize: 22, fontWeight: "900", letterSpacing: 1 }}>{artist.name}</Text>
-              <Text style={{ color: GOLD_DIM, fontSize: 13, marginTop: 4 }}>{artist.specialty}</Text>
+              <Text className="text-white text-[22px] font-black tracking-wide">{artist.name}</Text>
+              <Text className="text-ink-gold-dim text-[13px] mt-1">{artist.specialty}</Text>
               <FloralDivider />
-              <View style={{ flexDirection: "row", gap: 24, marginTop: 8 }}>
+              <View className="flex-row gap-6 mt-2">
                 {[
                   { label: "Experiência", value: artist.experience },
                   { label: "Instagram", value: artist.instagram },
                 ].map((item) => (
-                  <View key={item.label} style={{ alignItems: "center" }}>
-                    <Text style={{ color: "#fff", fontSize: 13, fontWeight: "800" }}>{item.value}</Text>
-                    <Text style={{ color: "#52525b", fontSize: 10, marginTop: 2 }}>{item.label}</Text>
+                  <View key={item.label} className="items-center">
+                    <Text className="text-white text-[13px] font-extrabold">{item.value}</Text>
+                    <Text className="text-ink-dim text-[10px] mt-0.5">{item.label}</Text>
                   </View>
                 ))}
               </View>
             </View>
 
             {/* Styles */}
-            <View style={{ paddingHorizontal: 24, marginBottom: 20 }}>
-              <Text style={{ color: "#a1a1aa", fontSize: 11, fontWeight: "700", textTransform: "uppercase", letterSpacing: 2, marginBottom: 10 }}>Especialidades</Text>
-              <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            <View className="px-6 mb-5">
+              <Text className="text-ink-muted text-[11px] font-bold uppercase tracking-[2px] mb-2.5">Especialidades</Text>
+              <View className="flex-row flex-wrap">
                 {artist.styles.map((sid) => <StylePill key={sid} styleId={sid} />)}
               </View>
             </View>
 
             {/* Mini gallery */}
-            <View style={{ paddingHorizontal: 24, marginBottom: 24 }}>
-              <Text style={{ color: "#a1a1aa", fontSize: 11, fontWeight: "700", textTransform: "uppercase", letterSpacing: 2, marginBottom: 10 }}>Trabalhos Recentes</Text>
+            <View className="px-6 mb-6">
+              <Text className="text-ink-muted text-[11px] font-bold uppercase tracking-[2px] mb-2.5">Trabalhos Recentes</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }}>
                 {seeds.map((seed) => (
-                  <View key={seed} style={{ width: 140, height: 180, borderRadius: 14, overflow: "hidden", borderWidth: 1, borderColor: "#2a2310" }}>
+                  <View key={seed} className="w-[140px] h-[180px] rounded-[14px] overflow-hidden border border-ink-border-warm">
                     <Image
                       source={{ uri: `https://picsum.photos/seed/${seed}/300/400` }}
-                      style={{ width: "100%", height: "100%" }}
+                      className="w-full h-full"
                       resizeMode="cover"
                     />
-                    <View style={{ position: "absolute", top: 0, right: 0, width: 20, height: 20, backgroundColor: GOLD_DIM, borderBottomLeftRadius: 8 }} />
+                    <View className="absolute top-0 right-0 w-5 h-5 bg-ink-gold-dim rounded-bl-lg" />
                   </View>
                 ))}
               </ScrollView>
             </View>
 
             {/* Stats row */}
-            <View style={{ flexDirection: "row", marginHorizontal: 24, marginBottom: 24, backgroundColor: "#111111", borderRadius: 16, borderWidth: 1, borderColor: "#2a2310", overflow: "hidden" }}>
+            <View className="flex-row mx-6 mb-6 bg-ink-card rounded-2xl border border-ink-border-warm overflow-hidden">
               {[
                 { value: "★ 4.9", label: "Avaliação" },
                 { value: "200+", label: "Tattoos" },
                 { value: "~3h", label: "Sessão média" },
               ].map((s, i, arr) => (
-                <View key={s.label} style={{ flex: 1, alignItems: "center", paddingVertical: 14, borderRightWidth: i < arr.length - 1 ? 1 : 0, borderRightColor: "#2a2310" }}>
-                  <Text style={{ color: GOLD, fontSize: 14, fontWeight: "900" }}>{s.value}</Text>
-                  <Text style={{ color: "#a1a1aa", fontSize: 10, marginTop: 2 }}>{s.label}</Text>
+                <View
+                  key={s.label}
+                  className="flex-1 items-center py-3.5"
+                  style={{ borderRightWidth: i < arr.length - 1 ? 1 : 0, borderRightColor: "#2a2310" }}
+                >
+                  <Text className="text-ink-gold text-sm font-black">{s.value}</Text>
+                  <Text className="text-ink-muted text-[10px] mt-0.5">{s.label}</Text>
                 </View>
               ))}
             </View>
 
             {/* Actions */}
-            <View style={{ paddingHorizontal: 24, gap: 10 }}>
+            <View className="px-6 gap-2.5">
               <TouchableOpacity
-                style={{ backgroundColor: GOLD, borderRadius: 14, paddingVertical: 16, alignItems: "center", shadowColor: GOLD, shadowOpacity: 0.45, shadowRadius: 12, elevation: 8 }}
+                className="bg-ink-gold rounded-[14px] py-4 items-center"
                 onPress={onBook}
                 activeOpacity={0.85}
+                style={{ shadowColor: "#D4AF37", shadowOpacity: 0.45, shadowRadius: 12, elevation: 8 }}
               >
-                <Text style={{ color: "#000", fontWeight: "900", fontSize: 14, letterSpacing: 3, textTransform: "uppercase" }}>
+                <Text className="text-black font-black text-sm tracking-[3px] uppercase">
                   {"\u2726 Agendar com " + artist.name.split(" ")[0]}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{ borderWidth: 1, borderColor: "#1f1f1f", borderRadius: 14, paddingVertical: 14, alignItems: "center" }}
+                className="border border-ink-border rounded-[14px] py-3.5 items-center"
                 onPress={onClose}
                 activeOpacity={0.8}
               >
-                <Text style={{ color: "#a1a1aa", fontSize: 13, fontWeight: "700" }}>Fechar</Text>
+                <Text className="text-ink-muted text-[13px] font-bold">Fechar</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -172,84 +161,77 @@ export default function ArtistsScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0a0a0a" }} edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-ink-bg" edges={["top"]}>
       {/* HEADER */}
-      <View style={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 4 }}>
-        <Text style={{ color: GOLD_DIM, fontSize: 10, textTransform: "uppercase", letterSpacing: 3 }}>Ink Studio</Text>
-        <Text style={{ color: "#fff", fontSize: 22, fontWeight: "900", textTransform: "uppercase", letterSpacing: 3 }}>Nossos Artistas</Text>
+      <View className="px-5 pt-4 pb-1">
+        <Text className="text-ink-gold-dim text-[10px] uppercase tracking-[3px]">Ink Studio</Text>
+        <Text className="text-white text-[22px] font-black uppercase tracking-[3px]">Nossos Artistas</Text>
         <FloralDivider />
-        <Text style={{ color: "#a1a1aa", fontSize: 12, marginTop: 4, lineHeight: 18 }}>
+        <Text className="text-ink-muted text-xs mt-1 leading-[18px]">
           Conheça nossos tatuadores e escolha o ideal para o seu estilo.
         </Text>
       </View>
 
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 40 }}>
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 40 }}>
         {ARTISTS.map((artist) => (
           <TouchableOpacity
             key={artist.id}
             onPress={() => setSelectedArtist(artist)}
             activeOpacity={0.88}
-            style={{
-              backgroundColor: "#111111",
-              borderWidth: 1, borderColor: "#2a2310",
-              borderRadius: 20, marginBottom: 16, overflow: "hidden",
-            }}
+            className="bg-ink-card border border-ink-border-warm rounded-[20px] mb-4 overflow-hidden"
           >
             {/* Top accent */}
-            <View style={{ height: 3, backgroundColor: GOLD_DIM }} />
+            <View className="h-[3px] bg-ink-gold-dim" />
 
-            <View style={{ padding: 20 }}>
+            <View className="p-5">
               {/* Profile row */}
-              <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                <View style={{ position: "relative" }}>
+              <View className="flex-row items-center mb-4">
+                <View className="relative">
                   <Image
                     source={{ uri: artist.avatar }}
-                    style={{ width: 72, height: 72, borderRadius: 36, borderWidth: 2, borderColor: GOLD }}
+                    className="w-[72px] h-[72px] rounded-full border-2 border-ink-gold"
                     resizeMode="cover"
                   />
-                  <View style={{
-                    position: "absolute", bottom: -2, right: -2,
-                    width: 18, height: 18, backgroundColor: "#22c55e",
-                    borderRadius: 9, borderWidth: 2, borderColor: "#111111",
-                  }} />
+                  <View className="absolute -bottom-0.5 -right-0.5 w-[18px] h-[18px] bg-ink-green rounded-full border-2 border-ink-card" />
                 </View>
-                <View style={{ flex: 1, marginLeft: 16 }}>
-                  <Text style={{ color: "#fff", fontWeight: "900", fontSize: 17 }}>{artist.name}</Text>
-                  <Text style={{ color: GOLD_DIM, fontSize: 12, fontWeight: "600", marginTop: 2 }}>{artist.specialty}</Text>
-                  <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
-                    <Text style={{ color: GOLD, fontSize: 11 }}>★ 4.9</Text>
-                    <Text style={{ color: "#52525b", fontSize: 10, marginLeft: 8 }}>{artist.experience}</Text>
+                <View className="flex-1 ml-4">
+                  <Text className="text-white font-black text-[17px]">{artist.name}</Text>
+                  <Text className="text-ink-gold-dim text-xs font-semibold mt-0.5">{artist.specialty}</Text>
+                  <View className="flex-row items-center mt-1">
+                    <Text className="text-ink-gold text-[11px]">★ 4.9</Text>
+                    <Text className="text-ink-dim text-[10px] ml-2">{artist.experience}</Text>
                   </View>
                 </View>
               </View>
 
               {/* Style pills */}
-              <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 16 }}>
+              <View className="flex-row flex-wrap mb-4">
                 {artist.styles.map((sid) => <StylePill key={sid} styleId={sid} />)}
               </View>
 
               {/* Instagram */}
-              <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                <View style={{ backgroundColor: "#1a1a1a", borderRadius: 8, paddingHorizontal: 10, paddingVertical: 5 }}>
-                  <Text style={{ color: "#a1a1aa", fontSize: 11 }}>{artist.instagram}</Text>
+              <View className="flex-row items-center mb-4">
+                <View className="bg-ink-surface rounded-lg px-2.5 py-[5px]">
+                  <Text className="text-ink-muted text-[11px]">{artist.instagram}</Text>
                 </View>
               </View>
 
               {/* Action buttons */}
-              <View style={{ flexDirection: "row", gap: 10 }}>
+              <View className="flex-row gap-2.5">
                 <TouchableOpacity
                   onPress={() => setSelectedArtist(artist)}
-                  style={{ flex: 1, borderWidth: 1, borderColor: GOLD_DIM, borderRadius: 12, paddingVertical: 11, alignItems: "center" }}
+                  className="flex-1 border border-ink-gold-dim rounded-xl py-[11px] items-center"
                   activeOpacity={0.8}
                 >
-                  <Text style={{ color: GOLD_DIM, fontSize: 12, fontWeight: "700" }}>Ver Perfil</Text>
+                  <Text className="text-ink-gold-dim text-xs font-bold">Ver Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => bookArtist(artist)}
-                  style={{ flex: 1, backgroundColor: GOLD, borderRadius: 12, paddingVertical: 11, alignItems: "center", shadowColor: GOLD, shadowOpacity: 0.35, shadowRadius: 8, elevation: 5 }}
+                  className="flex-1 bg-ink-gold rounded-xl py-[11px] items-center"
                   activeOpacity={0.85}
+                  style={{ shadowColor: "#D4AF37", shadowOpacity: 0.35, shadowRadius: 8, elevation: 5 }}
                 >
-                  <Text style={{ color: "#000", fontSize: 12, fontWeight: "900", textTransform: "uppercase", letterSpacing: 1 }}>Book</Text>
+                  <Text className="text-black text-xs font-black uppercase tracking-wide">Book</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -257,8 +239,8 @@ export default function ArtistsScreen() {
         ))}
 
         {/* Bottom note */}
-        <View style={{ alignItems: "center", paddingTop: 8 }}>
-          <Text style={{ color: "#52525b", fontSize: 11, textAlign: "center", lineHeight: 18 }}>
+        <View className="items-center pt-2">
+          <Text className="text-ink-dim text-[11px] text-center leading-[18px]">
             {"Todos os nossos artistas são certificados\ne seguem normas rigorosas de biossegurança."}
           </Text>
           <FloralDivider />

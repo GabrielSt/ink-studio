@@ -5,7 +5,7 @@ import { useApp } from "../../context/AppContext";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 const FAB_SIZE = 58;
-const BAR_H = 72;
+const BAR_H = 60;
 
 function IconHome({ active }: { active: boolean }) {
   return <Text className={`text-3xl text-center leading-8 ${active ? "text-ink-gold" : "text-ink-dim"}`}>⌂</Text>;
@@ -68,7 +68,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
     { name: "history",   label: "Histórico", icon: (a: boolean) => <IconScroll active={a} />, badge: pendingBadge },
   ];
 
-  const bottomPad = insets.bottom || (Platform.OS === "android" ? 12 : 0);
+  const bottomPad = Math.min(insets.bottom, 16);
 
   return (
     <View className="bg-ink-bar border-t border-ink-border-warm">
